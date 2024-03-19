@@ -1,18 +1,33 @@
 import streamlit as st
 import joblib
 import pickle
+import requests
 from sklearn.feature_extraction.text import CountVectorizer
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
+# Function to download file from GitHub
+def download_file_from_github(url, destination):
+    response = requests.get(url)
+    with open(destination, 'wb') as f:
+        f.write(response.content)
+
+# GitHub URLs for model and vectorizer
+model_url = 'https://github.com/Akj0805/NLP-Lab4/blob/main/model.pkl'
+vectorizer_url = 'https://github.com/Akj0805/NLP-Lab4/blob/main/vectorizer.pkl'
+
+# Download model and vectorizer files
+download_file_from_github(model_url, 'model.pkl')
+download_file_from_github(vectorizer_url, 'vectorizer.pkl')
+
 # Load the pretrained model
-with open('C:/Users/Akshay/Desktop/Deployment/model.pkl', 'rb') as f:
+with open('model.pkl', 'rb') as f:
     model = joblib.load(f)
 
 # Load the vectorizer
-with open('C:/Users/Akshay/Desktop/Deployment/vectorizer.pkl', 'rb') as f:
+with open('vectorizer.pkl', 'rb') as f:
     vectorizer = joblib.load(f)
 
 # Initialize NLTK resources
